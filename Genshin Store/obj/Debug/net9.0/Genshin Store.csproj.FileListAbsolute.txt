@@ -1,0 +1,14 @@
+C:\Users\zinov\source\repos\Genshin Store\bin\Debug\net9.0\Genshin Store.exe
+C:\Users\zinov\source\repos\Genshin Store\bin\Debug\net9.0\Genshin Store.deps.json
+C:\Users\zinov\source\repos\Genshin Store\bin\Debug\net9.0\Genshin Store.runtimeconfig.json
+C:\Users\zinov\source\repos\Genshin Store\bin\Debug\net9.0\Genshin Store.dll
+C:\Users\zinov\source\repos\Genshin Store\bin\Debug\net9.0\Genshin Store.pdb
+C:\Users\zinov\source\repos\Genshin Store\obj\Debug\net9.0\Genshin Store.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\zinov\source\repos\Genshin Store\obj\Debug\net9.0\Genshin Store.AssemblyInfoInputs.cache
+C:\Users\zinov\source\repos\Genshin Store\obj\Debug\net9.0\Genshin Store.AssemblyInfo.cs
+C:\Users\zinov\source\repos\Genshin Store\obj\Debug\net9.0\Genshin Store.csproj.CoreCompileInputs.cache
+C:\Users\zinov\source\repos\Genshin Store\obj\Debug\net9.0\Genshin Store.dll
+C:\Users\zinov\source\repos\Genshin Store\obj\Debug\net9.0\refint\Genshin Store.dll
+C:\Users\zinov\source\repos\Genshin Store\obj\Debug\net9.0\Genshin Store.pdb
+C:\Users\zinov\source\repos\Genshin Store\obj\Debug\net9.0\Genshin Store.genruntimeconfig.cache
+C:\Users\zinov\source\repos\Genshin Store\obj\Debug\net9.0\ref\Genshin Store.dll
