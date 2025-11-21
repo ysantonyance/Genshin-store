@@ -11,11 +11,11 @@ namespace Genshin_Store
         public void PrintRecommended()
         {
             Console.WriteLine("Recommended:");
-            Console.WriteLine("1. Blessing og the Welkin Moon - $5");
+            Console.WriteLine("1. Blessing of the Welkin Moon - $5");
             Console.WriteLine("\t(300 Genesis Cystals + 90 Primogems daily for 30 days)");
         }
 
-        public void PrintOutfits()
+        public void PrintSkins()
         {
             Console.WriteLine("Characters' Outfits:");
             Console.WriteLine("1. Red Dead of Night (Diluc) - 1680 GC");
@@ -31,17 +31,17 @@ namespace Genshin_Store
         public bool BuyWelkinMoon(Player player)
         {
             Console.WriteLine("Purchased Welkin Moon!\n+300 GC, will receive 90 Primogems daily");
-            player.GenesisCrystals += 300;
+            player.SetGenesisCrystals(player.GetGenesisCrystals() + 300);
             return true;
         }
 
-        public bool BuyOutfit(Player player, string outfitName, int price)
+        public bool BuyOutfit(Player player, Skin skinName, int price)
         {
-            if (player.GenesisCrystals >= price)
+            if (player.GetGenesisCrystals() >= price)
             {
-                player.GenesisCrystals -= price;
-                player.Outfits.Add(outfitName);
-                Console.WriteLine($"Bought {outfitName}");
+                player.SetGenesisCrystals(player.GetGenesisCrystals() - price);
+                player.AddSkin(skinName);
+                Console.WriteLine($"Bought {skinName}");
                 return true;
             }
             Console.WriteLine($"Not enough Genesis Crystals");

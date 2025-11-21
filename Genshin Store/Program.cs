@@ -21,40 +21,42 @@ namespace Genshin_Store
 
             Console.WriteLine($"Rn you, {player.GetName()}, have:\n");
             Console.WriteLine($"{player.GetPrimogems()} Primogems");
-            Console.WriteLine($"{player.GetGenesisCrystals} Genesis Crystals");
-            Console.WriteLine($"{player.GetStarglitter} Starglitter");
-            Console.WriteLine($"{player.GetStardust} Stardust");
+            Console.WriteLine($"{player.GetGenesisCrystals()} Genesis Crystals");
+            Console.WriteLine($"{player.GetStarglitter()} Starglitter");
+            Console.WriteLine($"{player.GetStardust()} Stardust");
             Console.WriteLine();
 
             shop.PrintRecommended();
             shop.BuyWelkinMoon(player);
-            Console.WriteLine($"Current Genesis Crystals: {player.GetGenesisCrystals}");
+            Console.WriteLine($"Current Genesis Crystals: {player.GetGenesisCrystals()}");
+
+            Console.WriteLine();
+            banner.PrintBannerInfo();
+
+            Console.WriteLine($"Wish result:");
+            Console.WriteLine();
+            for (int i = 0; i < 5; i++)
+            {
+                var wishResult = banner.MakeWish(player);
+                Console.WriteLine($"Wish {i + 1}: {wishResult}");
+            }
+            Console.WriteLine($"Current Primogems: {player.GetPrimogems()}");
+            Console.WriteLine($"Current Starglitter: {player.GetStarglitter()}");
+            Console.WriteLine($"Current Stardust: {player.GetStardust()}");
 
             Console.WriteLine();
 
-            var wishResult = banner.MakeWish(player);
-            wishResult += banner.MakeWish(player);
-            wishResult += banner.MakeWish(player);
-            wishResult += banner.MakeWish(player);
-            wishResult += banner.MakeWish(player);
-            Console.WriteLine($"Wish result:\n {wishResult}\n");
-            Console.WriteLine($"Current Primogems: {player.GetPrimogems}");
-            Console.WriteLine($"Current Starglitter: {player.GetStarglitter}");
-            Console.WriteLine($"Current Stardust: {player.GetStardust}");
+            Console.WriteLine($"Characters: {player.GetCharactersCount()}");
+            Console.WriteLine($"Weapons: {player.GetWeaponsCount()}");
+            Console.WriteLine($"Skins: {player.GetSkinsCount()}");
 
             Console.WriteLine();
 
-            Console.WriteLine($"Characters: {player.GetCharactersCount}");
-            Console.WriteLine($"Weapons: {player.GetWeaponsCount}");
-            Console.WriteLine($"Outfits: {player.GetSkinsCount}");
-
-            Console.WriteLine();
-
-            shop.PrintOutfits();
+            /*shop.PrintSkins();
             Console.WriteLine();
             bool bought = shop.BuyOutfit(player, "Red Dead of Night (Diluc)", 1680);
             Console.WriteLine($"Purchase: {bought}");
-            Console.WriteLine($"Current GC: {player.GetGenesisCrystals}");
+            Console.WriteLine($"Current GC: {player.GetGenesisCrystals}");*/
         }
     }
 }

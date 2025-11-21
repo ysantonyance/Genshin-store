@@ -73,10 +73,21 @@ namespace Genshin_Store
             Characters.Add(c);
         }
 
+        public List<Character> GetCharacters()
+        {
+            return Characters;
+        }
+
         public int GetCharactersCount()
         {
             return Characters.Count;
         }
+
+        public bool HasCharacter(Character name)
+        {
+            return Characters.Contains(name);
+        }
+
         public void AddWeapon(Weapon w)
         {
             Weapons.Add(w);
@@ -85,6 +96,16 @@ namespace Genshin_Store
         public int GetWeaponsCount()
         {
             return Weapons.Count;
+        }
+
+        public List<Weapon> GetWeapons()
+        {
+            return Weapons;
+        }
+
+        public bool HasWeapon(Weapon name)
+        {
+            return Weapons.Contains(name);
         }
         public void AddSkin(Skin s)
         {

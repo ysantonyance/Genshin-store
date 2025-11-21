@@ -10,6 +10,7 @@ namespace Genshin_Store
     {
         private string Name;
         private string ForCharacter;
+        //private int Rarity;
         public void SetName(string name)
         {
             this.Name = name;
