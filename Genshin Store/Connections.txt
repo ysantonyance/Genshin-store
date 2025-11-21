@@ -1,0 +1,34 @@
+InventoryItem
+- Абстрактный класс для всех предметов в инвентаре
+
+Banner
+- Абстрактный класс для всех баннеров
+
+---------------------------------------------------------------
+
+IWishable
+- Интерфейс для объектов, которые можно получить из баннера
+
+IPurchasable
+- Интерфейс для объектов, которые можно купить в магазине
+
+IInventory
+- Интерфейс, который описывает управление инвентарем
+
+---------------------------------------------------------------
+
+Character: InventoryItem, IWishable, IPurchasable
+Weapon: InventoryItem, IWishable, IPurchasable
+Skin: InventoryItem, IPurchasable
+
+Player: IInventory
+PlayerCurrency - управляет валютой игрока
+
+CharacterBanner: Banner
+WeaponBanner: Banner
+StandardBanner: Banner
+
+Shop
+
+WishResult - результат молитвы
+
