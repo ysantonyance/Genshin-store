@@ -162,10 +162,10 @@ namespace Genshin_Store
         {
             Console.WriteLine("Character & Weapon Banner");
             Console.WriteLine("Cost: 160 Primogems per wish");
-            Console.WriteLine("Chances: 1% 5★ | 10% 4★ | 89% 3★");
-            Console.WriteLine("5★: 50% character, 50% weapon");
-            Console.WriteLine("4★: 50% character, 50% weapon");
-            Console.WriteLine("3★: 100% weapons only");
+            Console.WriteLine("Chances: 1% 5* | 10% 4* | 89% 3*");
+            Console.WriteLine("5*: 50% character, 50% weapon");
+            Console.WriteLine("4*: 50% character, 50% weapon");
+            Console.WriteLine("3*: 100% weapons only");
         }
     }
 }
