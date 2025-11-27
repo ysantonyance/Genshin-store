@@ -31,7 +31,7 @@
 
   * Rider
 
-VS Code (з C# Dev Kit)
+  * VS Code (з C# Dev Kit)
 
 **Сумісність:**
 
