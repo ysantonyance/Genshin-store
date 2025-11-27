@@ -97,20 +97,20 @@ dotnet run
 
 ## 🔗 Посилання та ресурси
 
-* 🔗 Репозиторій: [https://github.com/ysantonyance/Genshin-store]
+* 🔗 Репозиторій: (Genshin Store)[https://github.com/ysantonyance/Genshin-store]
 
-* 📘 Документація .NET: [https://learn.microsoft.com/dotnet]
+* 📘 Документація .NET: (Microsoft Learn)[https://learn.microsoft.com/dotnet]
 
 * 🎨 Зображення / арти:
 
-  * [https://hoyolab.com]
+  * (HoYoLab)[https://hoyolab.com]
 
-  * [https://wallhaven.cc]
+  * (Wall Of Heaven)[https://wallhaven.cc]
 
 * 🤖 Нейромережі для генерації контенту:
 
-  * [https://openai.com/dall-e]
+  * (OpenAi)[https://openai.com/dall-e]
 
-  * [https://lexica.art]
+  * (Lexica)[https://lexica.art]
 
-  * [https://midjourney.com]
+  * (MdJourney)[https://midjourney.com]
