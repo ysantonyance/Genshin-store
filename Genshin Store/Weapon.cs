@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Genshin_Store
 {
-    internal class Weapon
+    public class Weapon : InventoryItem, IWishable, IPurchasable
     {
         private string name;
 
@@ -86,5 +86,48 @@ namespace Genshin_Store
         {
             return $"{Name} ({Rarity}* {Type})";
         }
+
+        private int price;
+
+        public int Price
+        {
+            get
+            {
+                return Rarity == 4 ? 25 : 
+                    Rarity == 3 ? 15 : 10;
+            }
+        }
+
+        public bool IsCharacter()
+        {
+            return false;
+        }
+
+        private string currencyType = "Starglitter";
+
+        public string CurrencyType
+        {
+            get
+            {
+                return currencyType;
+            }
+        }
+
+        public bool CanPurchase(Player player)
+        {
+            return player.GetStarglitter() >= Price;
+        }
+
+        public void Purchase (Player player)
+        {
+            if (!CanPurchase(player))
+                throw new ArgumentException("Can't buy weapon");
+
+            player.SetStarglitter(player.GetStarglitter() - Price);
+            player.AddWeapon(this);
+            Console.WriteLine($"You bought {this} for {Price} Starglitter");
+        }
+
+
     }
 }

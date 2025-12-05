@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Genshin_Store
 {
-    internal class Character
+    public class Character : InventoryItem, IWishable, IPurchasable
     {
         private string name;
 
@@ -65,33 +65,24 @@ namespace Genshin_Store
             Rarity = rarity;
             Element = element;
         }
-        /*public void SetName(string name)
+
+        public int Price => Rarity == 4 ? 25 : 15;
+        public string CurrencyType => "Starglitter";
+
+        public bool CanPurchase(Player player)
         {
-            this.Name = name;
-        }
-        public string GetName()
-        {
-            return Name;
+            return player.GetStarglitter() >= Price;
         }
 
-        public void SetRarity(int rarity)
+        public void Purchase(Player player)
         {
-            this.Rarity = rarity;
-        }
-        public int GetRarity()
-        {
-            return Rarity;
-        }
+            if (!CanPurchase(player))
+                throw new ArgumentException("Can't buy character");
 
-        public void SetElement(string element)
-        {
-            this.Element = element;
+            player.SetStarglitter(player.GetStarglitter() - Price);
+            player.AddCharacter(this);
+            Console.WriteLine($"You bought {this} for {Price} Starglitter");
         }
-
-        public string GetElement()
-        {
-            return Element;
-        }*/
 
         public override string ToString()
         {

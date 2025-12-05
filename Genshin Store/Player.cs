@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Genshin_Store
 {
-    internal class Player
+    public class Player : IInventory
     {
         private string Name;
         private int Primogems;
@@ -68,53 +68,36 @@ namespace Genshin_Store
         private List<Weapon> Weapons = new List<Weapon>();
         private List<Skin> Skins = new List<Skin>();
 
-        public void AddCharacter(Character c)
+
+        public List<Character> GetCharacters() => Characters;
+        public int GetCharactersCount() => Characters.Count;
+        public void AddCharacter(Character c) => Characters.Add(c);
+        public bool HasCharacter(Character name) => Characters.Contains(name);
+
+        public List<Weapon> GetWeapons() => Weapons;
+        public int GetWeaponsCount() => Weapons.Count;
+        public void AddWeapon(Weapon w) => Weapons.Add(w);
+        public bool HasWeapon(Weapon name) => Weapons.Contains(name);
+
+        public List<Skin> GetSkins() => Skins;
+        public int GetSkinsCount() => Skins.Count;
+        public void AddSkin(Skin s) => Skins.Add(s);
+        public bool HasSkin(Skin s) => Skins.Contains(s);
+        
+        public IEnumerable<Character> Get5Characters()
         {
-            Characters.Add(c);
+            return Characters.Where(c => c.Rarity == 5);
         }
 
-        public List<Character> GetCharacters()
+        public static Player operator +(Player player, int primogems)
         {
-            return Characters;
+            player.Primogems += primogems;
+            return player;
         }
 
-        public int GetCharactersCount()
+        public List<Character> GetCharactersByElement(string element)
         {
-            return Characters.Count;
-        }
-
-        public bool HasCharacter(Character name)
-        {
-            return Characters.Contains(name);
-        }
-
-        public void AddWeapon(Weapon w)
-        {
-            Weapons.Add(w);
-        }
-
-        public int GetWeaponsCount()
-        {
-            return Weapons.Count;
-        }
-
-        public List<Weapon> GetWeapons()
-        {
-            return Weapons;
-        }
-
-        public bool HasWeapon(Weapon name)
-        {
-            return Weapons.Contains(name);
-        }
-        public void AddSkin(Skin s)
-        {
-            Skins.Add(s);
-        }
-
-        public int GetSkinsCount()
-        {
-            return Skins.Count;
+            return GetCharacters().Where(c => c.Element == element).ToList();
         }
     }
 }

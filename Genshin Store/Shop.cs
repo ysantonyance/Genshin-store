@@ -59,7 +59,21 @@ namespace Genshin_Store
             else
                 not enough st
                 return true*/
-            return true;
+
+            if (player.GetStarglitter() >= price)
+            {
+                player.SetStarglitter(player.GetStarglitter() - price);
+
+                if (item.Contains("Fate") || item.Contains("fate"))
+                {
+                    player.SetPrimogems(player.GetPrimogems() + 160);
+                    Console.WriteLine($"Bought {item}! +160 Primogems");
+                }
+                return true;
+            }
+
+            Console.WriteLine("Not enough Starglitter");
+            return false;
         }
 
         public bool BuyWithStardust(Player player, string item, int price)
@@ -72,7 +86,25 @@ namespace Genshin_Store
             else
                 not enough st
                 return true*/
-            return true;
+
+            if (player.GetStardust() >= price)
+            {
+                player.SetStardust(player.GetStardust() - price);
+
+                if (item.Contains("Fate") || item.Contains("fate"))
+                {
+                    player.SetPrimogems(player.GetPrimogems() + 160);
+                    Console.WriteLine($"Bought {item}! +160 Primogems");
+                }
+                else
+                {
+                    Console.WriteLine($"Bought {item}!");
+                }
+                return true;
+            }
+
+            Console.WriteLine("Not enough Stardust");
+            return false;
         }
 
         public bool BuyWithPrimogems(Player player, string item, int price)
@@ -85,7 +117,25 @@ namespace Genshin_Store
             else
                 not enough Primogems
                 return true*/
-            return true;
+
+            if (player.GetPrimogems() >= price)
+            {
+                player.SetPrimogems(player.GetPrimogems() - price);
+
+                if (item.Contains("Fate") || item.Contains("fate"))
+                {
+                    player.SetPrimogems(player.GetPrimogems() + 160);
+                    Console.WriteLine($"Bought {item}! +160 Primogems");
+                }
+                else
+                {
+                    Console.WriteLine($"Bought {item}!");
+                }
+                return true;
+            }
+
+            Console.WriteLine("Bot enough Primogems");
+            return false;
         }
 
     }
