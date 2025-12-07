@@ -63,11 +63,45 @@ namespace Genshin_Store
         {
             return Stardust;
         }
+        
+        public void SpendPrimogems(int amount)
+        {
+            if (Primogems >= amount)
+                Primogems -= amount;
+            else
+                Console.WriteLine("Not enough primogems!");
+        }
+
+        public void AddGenesisCrystals(int amount) => GenesisCrystals += amount;
+        public void SpendGenesisCrystals(int amount)
+        {
+            if (GenesisCrystals >= amount)
+                GenesisCrystals -= amount;
+            else
+                Console.WriteLine("Not enough crystals!");
+        }
+
+        public void AddStarglitter(int amount) => Starglitter += amount;
+        public void SpendStarglitter(int amount)
+        {
+            if (Starglitter >= amount)
+                Starglitter -= amount;
+            else
+                Console.WriteLine("Not enough star glitter!");
+        }
+
+        public void AddStardust(int amount) => Stardust += amount;
+        public void SpendStardust(int amount)
+        {
+            if (Stardust >= amount)
+                Stardust -= amount;
+            else
+                Console.WriteLine("Not enough stardust!");
+        }
 
         private List<Character> Characters = new List<Character>();
         private List<Weapon> Weapons = new List<Weapon>();
         private List<Skin> Skins = new List<Skin>();
-
 
         public List<Character> GetCharacters() => Characters;
         public int GetCharacterCount() => Characters.Count;
@@ -88,6 +122,10 @@ namespace Genshin_Store
         {
             return Characters.Where(c => c.Rarity == 5);
         }
+        public IEnumerable<Character> Get4Characters()
+        {
+            return Characters.Where(c => c.Rarity == 4);
+        }
 
         public static Player operator +(Player player, int primogems)
         {
@@ -106,3 +144,4 @@ namespace Genshin_Store
         }
     }
 }
+
