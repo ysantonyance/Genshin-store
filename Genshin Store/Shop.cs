@@ -8,6 +8,18 @@ namespace Genshin_Store
 {
     internal class Shop
     {
+        private List<StoreItem> items = new List<StoreItem>();
+        public void AddItem(StoreItem item) => items.Add(item);
+
+        public void ShowItems()
+        {
+            Console.WriteLine("SHOP");
+            foreach (var item in items)
+            {
+                Console.WriteLine($"{item.Name} ({item.Type}) — {item.Price} primogems");
+            }
+        }
+        
         public void PrintRecommended()
         {
             Console.WriteLine("Recommended:");
@@ -134,9 +146,51 @@ namespace Genshin_Store
                 return true;
             }
 
-            Console.WriteLine("Bot enough Primogems");
+            Console.WriteLine("Not enough Primogems");
             return false;
         }
+        
+        public void BuyItem(Player player, string itemName)
+        {
+            StoreItem item = items.FirstOrDefault(i => i.Name == itemName);
 
+            if (item == null)
+            {
+                Console.WriteLine("Такого товара нет!");
+                return;
+            }
+
+            if (player.GetPrimogems() < item.Price)
+            {
+                Console.WriteLine("Not enough Primogems!");
+                return;
+            }
+
+            player.SpendPrimogems(item.Price);
+
+            switch (item.Type)
+            {
+                case "Character":
+                    player.AddCharacter(new Character() { Name = item.Name });
+                    Console.WriteLine($"Bought character {item.Name}!");
+                    break;
+
+                case "Weapon":
+                    player.AddWeapon(new Weapon() { Name = item.Name });
+                    Console.WriteLine($"Bought weapon {item.Name}!");
+                    break;
+
+                case "Skin":
+                    player.AddSkin(new Skin() { Name = item.Name });
+                    Console.WriteLine($"Bought skin {item.Name}!");
+                    break;
+
+                default:
+                    Console.WriteLine("Unknown item type!");
+                    break;
+            }
+        }
     }
 }
+
+
