@@ -18,6 +18,10 @@ namespace Genshin_Store
         public abstract string Name { get; }
         public abstract int Cost { get; }
 
+        protected int pityCounter = 0;
+        protected const int MaxPity = 90;
+        protected bool guaranteed5Star = false;
+
         protected Banner()
         {
             Random = new Random();
@@ -93,17 +97,29 @@ namespace Genshin_Store
             if (player.GetPrimogems() < Cost)
                 return $"Not enough Primogems! You need {Cost}, you have {player.GetPrimogems()}";
 
-            player.SetPrimogems(player.GetPrimogems() - Cost);
+            /*player.SetPrimogems(player.GetPrimogems() - Cost);
 
             int chance = Random.Next(100);
-            int rarity = GetRarity(chance);
+            int rarity = GetRarity(chance);*/
+            int rarity;
+            if (pityCounter >= MaxPity || (guaranteed5Star && Random.Next(100) < 1))
+            {
+                rarity = 5;
+                pityCounter = 0;
+                guaranteed5Star = false;
+            }
+            else
+            {
+                rarity = GetRarity(Random.Next(100));
+
+                if (rarity == 5)
+                {
+                    pityCounter = 0;
+                }
+            }
 
             object item = GetRandomItem(rarity);
-            string result = ProcessWishResult(player, item);
-
-            WishCompleted?.Invoke(result);
-
-            return result;
+            return ProcessWishResult(player, item);
         }
 
         protected virtual int GetRarity(int chance)
@@ -117,7 +133,23 @@ namespace Genshin_Store
             return 3;
         }
 
-        protected virtual object GetRandomItem(int rarity);
+        protected virtual object GetRandomItem(int rarity)
+        {
+            var characters = Characters.Where(c => c.Rarity == rarity).ToList();
+            var weapons = Weapons.Where(w => w.Rarity == rarity).ToList();
+
+            if (characters.Count == 0 && weapons.Count == 0)
+                return null;
+
+            bool chooseCharacter = characters.Count > 0 && (rarity == 3 ? false : Random.Next(2) == 0);
+
+            if (chooseCharacter)
+                return characters[Random.Next(characters.Count)];
+            else if (weapons.Count > 0)
+                return weapons[Random.Next(weapons.Count)];
+            else
+                return characters[Random.Next(characters.Count)];
+        }
 
         private string ProcessWishResult(Player player, object item)
         {
@@ -127,7 +159,7 @@ namespace Genshin_Store
                 {
                     int starglitter = character.Rarity == 5 ? 25 : 5;
                     player.SetStarglitter(player.GetStarglitter() + starglitter);
-                    return $"{character.Rarity}* character's duplicate! +{starglitter} Starglitter";
+                    return $"{character.Name} duplicate! +{starglitter} Starglitter";
                 }
                 else
                 {
@@ -144,12 +176,12 @@ namespace Genshin_Store
                     if (weapon.Rarity == 5 || weapon.Rarity == 4)
                     {
                         player.SetStarglitter(player.GetStarglitter() + reward);
-                        return $"{weapon.Rarity}* weapon's duplicate! +{reward} Starglitter";
+                        return $"{weapon.Name} duplicate! +{reward} Starglitter";
                     }
                     else
                     {
                         player.SetStardust(player.GetStardust() + 15);
-                        return $"{weapon.Rarity}* weapon's duplicate! +15 Stardust";
+                        return $"{weapon.Name} duplicate! +15 Stardust";
                     }
                 }
                 else
@@ -172,6 +204,68 @@ namespace Genshin_Store
         public List<Character> GetCharactersByRarity(int rarity)
         {
             return Characters.Where(c => c.Rarity == rarity).ToList();
+        }
+
+        public List<string> Make10Wishes(Player player)
+        {
+            if (player.GetPrimogems() < Cost * 10)
+                return new List<string>
+                {
+                    $"Not enough Primogems! You need {Cost * 10}, you have {player.GetPrimogems()}"
+                };
+
+            player.SetPrimogems(player.GetPrimogems() - Cost * 10);
+
+            List<string> results = new List<string>();
+            bool got4or5 = false;
+            int fourStarPity = 0;
+
+            for (int i = 0; i < 10; i++)
+            {
+                pityCounter++;
+                fourStarPity++;
+
+                int rarity;
+
+                if (pityCounter >= MaxPity || (guaranteed5Star && Random.Next(100) < 1))
+                {
+                    rarity = 5;
+                    pityCounter = 0;
+                    guaranteed5Star = false;
+                    fourStarPity = 0;
+                }
+                else if (fourStarPity >= 10)
+                {
+                    rarity = 4;
+                    fourStarPity = 0;
+                }
+                else
+                {
+                    rarity = GetRarity(Random.Next(100));
+
+                    if (rarity == 5)
+                    {
+                        pityCounter = 0;
+                        fourStarPity = 0;
+                    }
+                    else if (rarity == 4)
+                    {
+                        fourStarPity = 0;
+                    }
+                }
+
+                object item = GetRandomItem(rarity);
+                string result = ProcessWishResult(player, item);
+
+                results.Add($"{i + 1}. {result}");
+
+                if (rarity >= 4)
+                    got4or5 = true;
+            }
+
+            results.Add($"Pty| 5* Pity: {pityCounter}/{MaxPity}");
+
+            return results;
         }
     }
 }

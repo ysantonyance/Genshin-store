@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "JCfg/R3Ib28=",
+  "dgSpecHash": "Bkb8E46YoXo=",
   "success": true,
   "projectFilePath": "C:\\Users\\zinov\\source\\repos\\Genshin Store\\Genshin Store.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\zinov\\.nuget\\packages\\serilog\\4.3.0\\serilog.4.3.0.nupkg.sha512",
+    "C:\\Users\\zinov\\.nuget\\packages\\serilog.sinks.console\\6.1.1\\serilog.sinks.console.6.1.1.nupkg.sha512",
+    "C:\\Users\\zinov\\.nuget\\packages\\serilog.sinks.file\\7.0.0\\serilog.sinks.file.7.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

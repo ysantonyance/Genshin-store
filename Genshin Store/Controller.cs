@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Genshin_Store
@@ -17,12 +18,12 @@ namespace Genshin_Store
 
         public Controller()
         {
-            player = new Player("Traveler", 1600, 100, 10, 100);
+            player = new Player("Traveler", 160000, 100, 10, 100);
             availableBanners = new List<Banner>
             {
                 new StandardBanner(),
-                new EventBanner("Azure Wind", new Character("Jean", 5, "Anemo")),
-                new EventBanner("Flamin Thunder", new Character("Diluc", 5, "Pyro"))
+                new EventBanner("Rubedo, of White Stone Born (Durin)", new Character("Durin", 5, "Pyro")),
+                new EventBanner("Ballad in Goblets (Venti)", new Character("Venti", 5, "Anemo")),
             };
             currentBanner = availableBanners[0];
 
@@ -44,16 +45,32 @@ namespace Genshin_Store
                 switch (choice)
                 {
                     case "1":
+                        Make1Wish();
                         break;
                     case "2":
+                        Make10Wishes();
                         break;
                     case "3":
+                        OpenShop();
                         break;
                     case "4":
+                        ShowInventory();
                         break;
                     case "5":
+                        SelectBanner();
                         break;
                     case "6":
+                        SaveGame();
+                        break;
+                    case "7":
+                        LoadGame();
+                        break;
+                    case "8":
+                        Console.WriteLine("Thank you for playing!");
+                        return;
+                    default:
+                        Console.WriteLine("Invalid choice. Press any key...");
+                        Console.ReadKey();
                         break;
                 }
             }
@@ -74,7 +91,7 @@ namespace Genshin_Store
 
         private void DisplayMenu()
         {
-            Console.WriteLine("Main Menu");
+            /*Console.WriteLine("Main Menu");
             Console.WriteLine("1. Make a wish (160 Primogems)");
             Console.WriteLine("2. Shop");
             Console.WriteLine("3. Inventory");
@@ -82,6 +99,16 @@ namespace Genshin_Store
             Console.WriteLine("5. Save game");
             Console.WriteLine("6. Load game");
             Console.WriteLine("7. Exit");
+            Console.WriteLine("Choose action: ");*/
+            Console.WriteLine("Main Menu");
+            Console.WriteLine("1. Make 1 wish (160 Primogems)");
+            Console.WriteLine("2. Make 10 wishes (1600 Primogems)");
+            Console.WriteLine("3. Shop");
+            Console.WriteLine("4. Inventory");
+            Console.WriteLine("5. Select Banner");
+            Console.WriteLine("6. Save game");
+            Console.WriteLine("7. Load game");
+            Console.WriteLine("8. Exit");
             Console.WriteLine("Choose action: ");
         }
 
@@ -92,22 +119,80 @@ namespace Genshin_Store
             currentBanner.PrintInfo();
 
             Console.WriteLine($"Your Primogems: {player.GetPrimogems()}");
-            Console.WriteLine("Make a wish? (y/n): ");
+            Console.WriteLine("1. 1 Wish (160 Primogems)");
+            Console.WriteLine("2. 10 Wishes (1600 Primogems)");
+            Console.WriteLine("3. Exit");
+            Console.WriteLine("Choose action: ");
+            string choice = Console.ReadLine();
 
-            if (Console.ReadLine().ToLower() == "y")
+            switch (choice)
             {
-                try
-                {
-                    string result = currentBanner.MakeWish(player);
-                    Console.WriteLine($"Result: {result}");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error: {ex.Message}");
-                }
+                case "1":
+                    Make1Wish();
+                    break;
+                case "2":
+                    Make10Wishes();
+                    break;
+                case "3":
+                    return;
+                default:
+                    Console.WriteLine("Invalid choice!");
+                    break;
+            }
+        }
+
+        private void Make1Wish()
+        {
+            try
+            {
+                string result = currentBanner.MakeWish(player);
+                Console.WriteLine($"\nResult: {result}");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
             }
 
-            Console.WriteLine("Press any key to conitnue...");
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
+        }
+
+        private void Make10Wishes()
+        {
+            try
+            {
+                var results = currentBanner.Make10Wishes(player);
+
+                Console.WriteLine("10 wishes results");
+                Console.WriteLine($"Spent: {currentBanner.Cost * 10} Primogems\n");
+
+                foreach (var result in results)
+                {
+                    if (result.Contains("5*"))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine(result);
+                        Console.ResetColor();
+                    }
+                    else if (results.Contains("4*"))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.WriteLine(result);
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.WriteLine(result);
+                    }
+                }
+                Console.WriteLine($"\nLeft Primogems: {player.GetPrimogems()}");
+            }
+            catch(Exception ex )
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey();
         }
 
@@ -178,7 +263,7 @@ namespace Genshin_Store
             Console.WriteLine("Inventory");
 
             Console.WriteLine("\nCharacters:");
-            if (player.GetCharactersCount() > 0)
+            if (player.GetCharacterCount() > 0)
             {
                 foreach (Character character in player.GetCharacters())
                 {
@@ -191,7 +276,7 @@ namespace Genshin_Store
             }
 
             Console.WriteLine("\nWeapons: ");
-            if (player.GetWeaponsCount() > 0)
+            if (player.GetWeaponCount() > 0)
             {
                 foreach (Weapon weapon in player.GetWeapons())
                 {
@@ -215,6 +300,109 @@ namespace Genshin_Store
             {
                 Console.WriteLine($" No skins");
             }
+
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
+        }
+
+        private void SelectBanner()
+        {
+            Console.Clear();
+            Console.WriteLine("Select Banner");
+
+            for (int i = 0; i < availableBanners.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {availableBanners[i].Name}");
+            }
+
+            Console.WriteLine($"Select banner (1 - {availableBanners.Count})");
+
+            if (int.TryParse(Console.ReadLine(), out int choice)
+                && choice >= 1 && choice <= availableBanners.Count)
+            {
+                currentBanner = availableBanners[choice - 1];
+                Console.WriteLine($"Selected: {currentBanner.Name}");
+            }
+            else
+            {
+                Console.WriteLine("Invalid choice!");
+            }
+
+            Console.WriteLine("\nPress any key to continue");
+            Console.ReadKey();
+        }
+
+        private void SaveGame()
+        {
+            try
+            {
+                var saveData = new
+                {
+                    PlayerName = player.GetName(),
+                    Primogems = player.GetPrimogems(),
+                    GenesisCrystals = player.GetGenesisCrystals(),
+                    Starglitter = player.GetStarglitter(),
+                    Stardust = player.GetStardust(),
+                    SaveTime = DateTime.Now
+                };
+
+                string json = JsonSerializer.Serialize(saveData, new JsonSerializerOptions()
+                {
+                    WriteIndented = true
+                });
+
+                File.WriteAllText("save.json", json);
+                Console.WriteLine("Game saved succesfully");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving game: {ex.Message}");
+            }
+
+            Console.WriteLine("\nPress any key to continue");
+            Console.ReadKey();
+        }
+
+        private void LoadGame()
+
+        {
+            try
+            {
+                if (File.Exists("save.json"))
+                {
+                    string json = File.ReadAllText("save.json");
+                    var saveData = JsonSerializer.Deserialize<SaveData>(json);
+
+                    player.SetName(saveData.PlayerName);
+                    player.SetPrimogems(saveData.Primogems);
+                    player.SetGenesisCrystals(saveData.GenesisCrystals);
+                    player.SetStarglitter(saveData.Starglitter);
+                    player.SetStardust(saveData.Stardust);
+
+                    Console.WriteLine($"Game loaded! Last save: {saveData.SaveTime}");
+                }
+                else
+                {
+                    Console.WriteLine("No save file found!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading game: {ex.Message}");
+            }
+
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
+        }
+
+        private class SaveData
+        {
+            public string PlayerName { get; set; }
+            public int Primogems { get; set; }
+            public int GenesisCrystals { get; set; }
+            public int Starglitter { get; set; }
+            public int Stardust { get; set; }
+            public DateTime SaveTime { get; set; }
         }
     }
 }

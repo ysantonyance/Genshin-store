@@ -91,7 +91,7 @@ namespace Genshin_Store
                     rewards = $"+{Starglitter} Starglitter";
                 if (Stardust > 0)
                     rewards = $"+{Stardust} Stardust";
-                return $"{Item.Rarity}* Duplicate! {rewards}";
+                return $"{Item.Name} Duplicate! {rewards}";
             }
 
             return $"New Item: {Item.Name} ({Item.Rarity})";

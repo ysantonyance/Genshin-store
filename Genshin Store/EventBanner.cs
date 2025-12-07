@@ -64,8 +64,9 @@ namespace Genshin_Store
                 }
                 else
                 {
-                    var other5Star = Characters.Where(c => c.Rarity == 5
-                    && c != eventCharacter).ToList();
+                    var other5Star = Characters
+                        .Where(c => c.Rarity == 5 && c != eventCharacter)
+                        .ToList();
 
                     if (other5Star.Count > 0)
                     {

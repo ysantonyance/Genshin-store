@@ -12,3 +12,8 @@ C:\Users\zinov\source\repos\Genshin Store\obj\Debug\net9.0\refint\Genshin Store.
 C:\Users\zinov\source\repos\Genshin Store\obj\Debug\net9.0\Genshin Store.pdb
 C:\Users\zinov\source\repos\Genshin Store\obj\Debug\net9.0\Genshin Store.genruntimeconfig.cache
 C:\Users\zinov\source\repos\Genshin Store\obj\Debug\net9.0\ref\Genshin Store.dll
+C:\Users\zinov\source\repos\Genshin Store\obj\Debug\net9.0\Genshin Store.csproj.AssemblyReference.cache
+C:\Users\zinov\source\repos\Genshin Store\bin\Debug\net9.0\Serilog.dll
+C:\Users\zinov\source\repos\Genshin Store\bin\Debug\net9.0\Serilog.Sinks.Console.dll
+C:\Users\zinov\source\repos\Genshin Store\bin\Debug\net9.0\Serilog.Sinks.File.dll
+C:\Users\zinov\source\repos\Genshin Store\obj\Debug\net9.0\Genshin .65AB0092.Up2Date

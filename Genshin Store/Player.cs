@@ -70,12 +70,12 @@ namespace Genshin_Store
 
 
         public List<Character> GetCharacters() => Characters;
-        public int GetCharactersCount() => Characters.Count;
+        public int GetCharacterCount() => Characters.Count;
         public void AddCharacter(Character c) => Characters.Add(c);
         public bool HasCharacter(Character name) => Characters.Contains(name);
 
         public List<Weapon> GetWeapons() => Weapons;
-        public int GetWeaponsCount() => Weapons.Count;
+        public int GetWeaponCount() => Weapons.Count;
         public void AddWeapon(Weapon w) => Weapons.Add(w);
         public bool HasWeapon(Weapon name) => Weapons.Contains(name);
 
@@ -98,6 +98,11 @@ namespace Genshin_Store
         public List<Character> GetCharactersByElement(string element)
         {
             return GetCharacters().Where(c => c.Element == element).ToList();
+        }
+
+        public Character this[int index]
+        {
+            get => GetCharacters()[index];
         }
     }
 }
