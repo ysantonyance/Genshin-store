@@ -64,6 +64,7 @@ namespace Genshin_Store
             return Stardust;
         }
         
+        public void AddPrimogems(int amount) => Primogems += amount;
         public void SpendPrimogems(int amount)
         {
             if (Primogems >= amount)
@@ -144,4 +145,5 @@ namespace Genshin_Store
         }
     }
 }
+
 
