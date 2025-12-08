@@ -8,6 +8,51 @@ namespace Genshin_Store
 {
     internal class Shop
     {
+        public class StoreItem
+        {
+            private string name;
+            private string type;
+            private int price;
+
+            public string GetName()
+            {
+                return name;
+            }
+
+            public string GetTypeName()
+            {
+                return type;
+            }
+
+            public int GetPrice()
+            {
+                return price;
+            }
+
+            public void SetName(string value)
+            {
+                name = value;
+            }
+
+            public void SetTypeName(string value)
+            {
+                type = value;
+            }
+
+            public void SetPrice(int value)
+            {
+                price = value;
+            }
+
+        public StoreItem(string name, string type, int price)
+        {
+            SetName(name);
+            SetTypeName(type);
+            SetPrice(price);
+        }
+    }
+
+    }
         private List<StoreItem> items = new List<StoreItem>();
         public void AddItem(StoreItem item) => items.Add(item);
 
@@ -192,5 +237,6 @@ namespace Genshin_Store
         }
     }
 }
+
 
 
