@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System; //подключаем базовые классы
+using System.Collections.Generic; //это для доступа к коллекция
+using System.Linq; //для Linq методов
+using System.Text; //для работы со строками
+using System.Threading.Tasks; //пространство имён, которое работает с асинхронными задачами
 
 namespace Genshin_Store //простронство имен для кода внутри проекта
 {
@@ -236,6 +236,7 @@ namespace Genshin_Store //простронство имен для кода вн
         }
     }
 }
+
 
 
 
