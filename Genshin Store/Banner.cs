@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace Genshin_Store
 {
+    //Основа системы молитвы
+    //
     public abstract class Banner
     {
+        //событие о завершении молитвы
         public event Action<string> WishCompleted;
 
         protected List<Character> Characters {  get; set; }
@@ -18,6 +21,7 @@ namespace Genshin_Store
         public abstract string Name { get; }
         public abstract int Cost { get; }
 
+        //счетчик гарнтиии до легендарки
         protected int pityCounter = 0;
         protected const int MaxPity = 90;
         protected bool guaranteed5Star = false;
@@ -30,6 +34,7 @@ namespace Genshin_Store
             InitializeItems();
         }
 
+        //заполнений стандартного баннера, персонажи и оружие которого присутствует в любых баннерах
         protected virtual void InitializeItems()
         {
             /*new Character("Diluc", 5, "Pyro")
@@ -63,22 +68,22 @@ namespace Genshin_Store
             new Weapon("Bloodsoaked Ruins", 5, "Polearm"),
             new Weapon("Amo's Bow", 5, "Bow"),
             new Weapon("A Thousand Floating Dreams", 5, "Catalyst"),*/
-            Weapons.Add(new Weapon("Absolution", 5, "Sword"));
-            Weapons.Add(new Weapon("A Thousand Blazing Suns", 5, "Claymore"));
-            Weapons.Add(new Weapon("Bloodsoaked Ruins", 5, "Polearm"));
+            Weapons.Add(new Weapon("Skyward Blade", 5, "Sword"));
+            Weapons.Add(new Weapon("Wolf's Gravestone", 5, "Claymore"));
+            Weapons.Add(new Weapon("Primordial Jade Winged-Spear", 5, "Polearm"));
             Weapons.Add(new Weapon("Amo's Bow", 5, "Bow"));
-            Weapons.Add(new Weapon("A Thousand Floating Dreams", 5, "Catalyst"));
+            Weapons.Add(new Weapon("Lost Prayer to the Sacred", 5, "Catalyst"));
 
             /*new Weapon("Amenoma Kageuchi", 4, "Sword"),
             new Weapon("Akuomaru", 4, "Claymore"),
             new Weapon("Ballad of the Fjords", 4, "Polearm"),
             new Weapon("Alley Hunter", 4, "Bow"),
             new Weapon("Ash-Given Drinking Horn", 4, "Catalyst"),*/
-            Weapons.Add(new Weapon("Amenonma Kageuchi", 4, "Sword"));
-            Weapons.Add(new Weapon("Akuomaru", 4, "Claymore"));
-            Weapons.Add(new Weapon("Ballad of the Fjords", 4, "Polearm"));
-            Weapons.Add(new Weapon("Alley Hunter", 4, "Bow"));
-            Weapons.Add(new Weapon("Ash-Given Drinking Horn", 4, "Catalyst"));
+            Weapons.Add(new Weapon("Favonius Sword", 4, "Sword"));
+            Weapons.Add(new Weapon("Sacrificial Greatsword", 4, "Claymore"));
+            Weapons.Add(new Weapon("Dragon's Bane", 4, "Polearm"));
+            Weapons.Add(new Weapon("Rust", 4, "Bow"));
+            Weapons.Add(new Weapon("Mappa Mare", 4, "Catalyst"));
 
             /*new Weapon("Cool Steel", 3, "Sword"),
             new Weapon("Bloodstained Greatsword", 3, "Claymore"),
@@ -151,7 +156,7 @@ namespace Genshin_Store
                 return characters[Random.Next(characters.Count)];
         }
 
-        private string ProcessWishResult(Player player, object item)
+        protected string ProcessWishResult(Player player, object item)
         {
             if (item is Character character)
             {

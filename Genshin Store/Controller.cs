@@ -19,11 +19,28 @@ namespace Genshin_Store
         public Controller()
         {
             player = new Player("Traveler", 160000, 100, 10, 100);
+
+            var event5StarWeapons = new List<Weapon>
+            {
+                new Weapon("Athame Artis", 5, "Sword"),
+                new Weapon("The Daybreak Chronicles", 5, "Bow")
+            };
+
+            var event4StarWeapons = new List<Weapon>
+            {
+                new Weapon("The Alley Flash", 4, "Sword"),
+                new Weapon("Prospector's Drill", 4, "Polearm"),
+                new Weapon("Wine and Song", 4, "Catalyst"),
+                new Weapon("Rainslaher", 4, "Claymore"),
+                new Weapon("The Stringless", 4, "Bow")
+            };
+
             availableBanners = new List<Banner>
             {
                 new StandardBanner(),
-                new EventBanner("Rubedo, of White Stone Born (Durin)", new Character("Durin", 5, "Pyro")),
-                new EventBanner("Ballad in Goblets (Venti)", new Character("Venti", 5, "Anemo")),
+                new CharacterEventBanner("Rubedo, of White Stone Born (Durin)", new Character("Durin", 5, "Pyro")),
+                new CharacterEventBanner("Ballad in Goblets (Venti)", new Character("Venti", 5, "Anemo")),
+                new WeaponEventBanner("Epitome Invocation (Weapons)", event5StarWeapons, event4StarWeapons)
             };
             currentBanner = availableBanners[0];
 
@@ -33,7 +50,7 @@ namespace Genshin_Store
         public void Run()
         {
             Console.Title = "Genshin Impact Store";
-            Console.ForegroundColor = ConsoleColor.Cyan;
+            //Console.ForegroundColor = ConsoleColor.Cyan;
 
             while (true)
             {
@@ -168,13 +185,13 @@ namespace Genshin_Store
 
                 foreach (var result in results)
                 {
-                    if (result.Contains("5*"))
+                    if (result.Contains("5*") || result.Contains("+25"))
                     {
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine(result);
                         Console.ResetColor();
                     }
-                    else if (results.Contains("4*"))
+                    else if (result.Contains("4*") || result.Contains("+5"))
                     {
                         Console.ForegroundColor = ConsoleColor.Magenta;
                         Console.WriteLine(result);
@@ -182,7 +199,9 @@ namespace Genshin_Store
                     }
                     else
                     {
+                        Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.WriteLine(result);
+                        Console.ResetColor();
                     }
                 }
                 Console.WriteLine($"\nLeft Primogems: {player.GetPrimogems()}");
